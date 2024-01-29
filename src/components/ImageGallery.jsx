@@ -1,5 +1,5 @@
 import React from 'react';
-import ImageGalleryItem from './ImageGalleryItem';
+import ImageGalleryItem from './ImageGalleryItem.jsx';
 
 const ImageGallery = ({ images, openModal }) => (
   <ul className="ImageGallery">
@@ -8,5 +8,6 @@ const ImageGallery = ({ images, openModal }) => (
     ))}
   </ul>
 );
+//każdy element tablicy 'images' jest przekształcany na element <ImageGalleryItem>. Dla każdego obrazka przekazywane są odpowiednie propsy. Funkcja onClick przekazuje adres URL dużego obrazu 'largeImageURL' do funkcji 'openModal'
 
 export default ImageGallery;

@@ -36,18 +36,26 @@ class App extends Component {
   fetchImages = () => {
     const { query, page } = this.state;
     const url = `https://pixabay.com/api/?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
-//????
+
+
+//Na początku metoda ustawia flagę 'loading' na wartość 'true', co oznacza, że rozpoczyna się proces ładowania danych. Dzięki temu użytkownik może zobaczyć wskaźnik ładowania
     this.setState({ loading: true });
 
     axios
+   //wywoływane jest zapytanie HTTP GET przy użyciu funkcji 'get' z biblioteki Axios, żeby pobrać dane z określonego adresu URL.
       .get(url)
+
+      //Jeśli zapytanie zostanie zakończone sukcesem, wykonuje się to co poisano w metodzie.then() - ta metoda przyjmuje obiekt response zawierający dane zwrócone przez serwer
       .then(response => {
         this.setState(prevState => ({
+          //[...prevState.images] tworzy nową tablicę zawierającą wszystkie obiekty z tablicy prevState.images, czyli obrazy pobrane wcześniej z poprzednich zapytań. [...response.data.hits] rozwija tablicę response.data.hits, która zawiera nowo pobrane obrazy z serwera Pixabay. Cała konstrukcja [...prevState.images, ...response.data.hits] łączy obie te tablice w jedną, zawierającą zarówno wcześniej pobrane obrazy, jak i nowo pobrane obrazy
           images: [...prevState.images, ...response.data.hits],
           page: prevState.page + 1,
         }));
       })
       .catch(error => console.log('Error fetching data', error))
+
+      //Niezależnie od tego, czy zapytanie zakończy się sukcesem czy błędem, ta część kodu jest zawsze wywoływana. Metoda 'finally()' ustawia flagę 'loading' na wartość 'false', co oznacza, że proces ładowania danych został zakończony
       .finally(() => this.setState({ loading: false }));
   };
 
@@ -70,7 +78,7 @@ class App extends Component {
   };
 
 
-  // Metoda 'closeModal()' jest wywoływana, gdy użytkownik zamknie okno modalne poprzez kliknięcie w tło lub wciśnięcie klawisza ESC. Ustawia ona flagę 'showModal' na 'false' oraz resetuje 'largeImageURL', aby zamknąć okno modalne i wyczyścić adres URL dużego obrazu
+  // Metoda 'closeModal()' jest wywoływana, gdy użytkownik zamknie okno modalne poprzez kliknięcie w tło lub wciśnięcie ESC. Ustawia ona flagę 'showModal' na 'false' oraz resetuje 'largeImageURL', aby zamknąć okno modalne i wyczyścić adres URL dużego obrazu
   closeModal = () => {
     this.setState({ showModal: false, largeImageURL: '' });
   };
