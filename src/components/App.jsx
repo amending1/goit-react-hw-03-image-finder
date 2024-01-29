@@ -15,7 +15,7 @@ class App extends Component {
     images: [],
     //string przechowujący bieżące zapytanie wyszukiwania. Początkowo jest pusty , ale zostanie zaktualizowany, kiedy użytkownik wprowadzi zapytanie
     query: '',
-    // aktualna stronę obrazów pobranych z API Pixabay. Początkowo jest ustawiona na 1, ale zwiększa się, kiedy użytkownik wczytuje kolejne strony
+    // aktualna strona obrazów pobranych z API Pixabay. Początkowo jest ustawiona na 1, ale zwiększa się, kiedy użytkownik wczytuje kolejne strony
     page: 1,
     //  boolean, który wskazuje, czy trwa ładowanie danych z serwera. Początkowo jest ustawiony na false, alezmienia się na true podczas pobierania danych i z powrotem na false, gdy dane zostały pomyślnie załadowane lub wystąpił błąd
     loading: false,
@@ -49,7 +49,7 @@ class App extends Component {
       .then(response => {
         this.setState(prevState => ({
           //[...prevState.images] tworzy nową tablicę zawierającą wszystkie obiekty z tablicy prevState.images, czyli obrazy pobrane wcześniej z poprzednich zapytań. [...response.data.hits] rozwija tablicę response.data.hits, która zawiera nowo pobrane obrazy z serwera Pixabay. Cała konstrukcja [...prevState.images, ...response.data.hits] łączy obie te tablice w jedną, zawierającą zarówno wcześniej pobrane obrazy, jak i nowo pobrane obrazy
-          images: [...prevState.images, ...response.data.hits],
+          images: [...prevState.images, ...response.data.hits], //hits z Pixabay
           page: prevState.page + 1,
         }));
       })
